@@ -1,0 +1,29 @@
+[{
+    "author": "channelPos",
+    "totalCapital":10,
+    "posWeight":1,
+    "pctPerTrade":1,
+    "palValue": 100,
+    "barPeriod": 800,
+    "orderTime":4,
+    "totalSecond" :30,
+    "stepSecond": 5,
+    
+    "timeframeMap" :
+    {"signalPeriod":"15m", "volPeriod":"5m", "tradePeriod":"1m"},
+    
+    "fastPeriod":40,
+    "slowPeriod": 400,
+    "sigPeriod": 120,
+    "cciPeriod": 200,
+    "cciEntryThreshold":100,
+    "cciExitThreshold": 75, 
+
+    "volPeriod": 36,
+    "lowVolThreshold":0.0012,
+    "highVolThreshold":0.0035,
+    "bigVolPeriod": 5,
+    "bigVolThreshold": 0.025,
+    "bigMultiplier": 0.015,
+    "stoplossPct": 0.05
+}]
