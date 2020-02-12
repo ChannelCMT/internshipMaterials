@@ -11,24 +11,26 @@ if __name__ == '__main__':
     from rBreakStrategy import rBreakStrategy
     # 创建回测引擎
     engine = BacktestingEngine()
-    engine.setDB_URI("mongodb://172.16.11.81:27017")
+    # engine.setDB_URI("mongodb://172.16.11.81:27017")
+    engine.setDB_URI("mongodb://localhost:27017")
+
 
     # Bar回测
     engine.setBacktestingMode(engine.BAR_MODE)
-    engine.setDatabase('VnTrader_1Min_Db_contest')
+    engine.setDatabase('Kline_1Min_Auto_Db_Plus')
 
     # Tick回测
     # engine.setBacktestingMode(engine.TICK_MODE)
     # engine.setDatabase('VnTrader_1Min_Db', 'VnTrader_Tick_Db')
 
     # 设置回测用的数据起始日期，initHours 默认值为 0
-    engine.setDataRange(datetime(2015,6,1), datetime(2019,12,31), datetime(2015,1,1))
+    engine.setDataRange(datetime(2018,6,1), datetime(2020,2,10), datetime(2018,5,1))
 
 
     # 设置产品相关参数
     engine.setCapital(1000)  # 设置起始资金，默认值是1,000,000
     contracts = [{
-                    "symbol":"IF88:CTP",
+                    "symbol":"btc_usd_cq.future:okex",
                     "size" : 1, # 每点价值
                     "priceTick" : 0.001, # 最小价格变动
                     "rate" : 5/10000, # 单边手续费

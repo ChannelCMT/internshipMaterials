@@ -3,25 +3,25 @@ import numpy as np
 import json
 import os
 from datetime import datetime
-from kamaSarStrategy import kamaSarStrategy
+from rBreakStrategy import rBreakStrategy
 
-STRATEGYCLASS = kamaSarStrategy
+STRATEGYCLASS = rBreakStrategy
 
 # 指定引擎设置
 ENGINESETTING = {
                 "timeRange": {
-                    "tradeStart":datetime(2014, 3, 1),
-                    "tradeEnd":datetime(2017, 12, 30),
-                    "historyStart":datetime(2014, 1, 1)
+                    "tradeStart":datetime(2018, 6, 1),
+                    "tradeEnd":datetime(2019, 7, 1),
+                    "historyStart":datetime(2018, 1, 3)
                     },
                 "contracts":[{
-                            "slippage": 0,
-                            "rate": 0.0008,
-                            "symbol": "IF:CTP"
+                            "slippage": 0.005,
+                            "rate": 0.0005,
+                            "symbol": "btc_usd_cq.future:okex"
                            }],
                 'dbURI': "mongodb://172.16.11.81:27017",
-                "bardbName": "VnTrader_1Min_Db_contest",
-                "symbolList": ["IF:CTP"]
+                "bardbName": "Kline_1Min_Auto_Db_Plus",
+                "symbolList": ["btc_usd_cq.future:okex"]
                 }
 
 
@@ -33,19 +33,25 @@ OPT_TARGET = "sharpeRatio"
 OPT_TASK = [
             {"pick_freq_param": 
                 {
-                "rangePeriod": range(4,49,4),
-                "breakPct": np.arange(0.1, 0.41, 0.05)
+                "rangePeriod": range(200, 241, 20),
+                "breakPct": np.arange(0.35, 0.61, 0.01)
                 }
             }, 
             {"pick_best_param": 
                 {
-                "observedPct": np.arange(0.1, 0.41, 0.05),
-                "reversedPct": np.arange(0.03,0.22,0.03),
+                "observedPct": np.arange(0.2, 0.41, 0.01),
+                "reversedPct": np.arange(0.01,0.22,0.01),
                 }
             }, 
             {"pick_best_param": 
                 {
-                "signalPeriod": range(4, 61, 4)
+                "signalPeriod": range(4, 61, 1)
+                }
+            }, 
+            {"pick_best_param": 
+                {
+                "dailyPeriod": [24, 12, 8, 6],
+                "calTime": [20, 0, 14, 8]
                 }
             }, 
 ]

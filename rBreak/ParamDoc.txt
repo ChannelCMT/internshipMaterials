@@ -1,0 +1,5 @@
+1. lowVolThreshold：2019.1-4月表现不好，具体原因是波动率太小，加了波动率过滤的参数。
+2. trailingPct： 加了2%的硬止损避免大额亏损。
+3. nHour： 短期策略控制持仓最长时间
+4. stopControlTime： 避免连续进场，添加平仓后1小时左右没进行买卖
+5. bigVolPeriod， bigVolThreshold， bigMultiplier： 在极端大波动行情后进场减仓

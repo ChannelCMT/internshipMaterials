@@ -26,20 +26,30 @@ class rBreakSignal():
         reversedShort = ((1-reversedPct)*pastLow + (1+reversedPct)*pastHigh)/2
         breakLong = observedShort+breakPct*(observedShort-observedLong)
         breakShort = observedLong-breakPct*(observedShort-observedLong)
+        
         return observedLong, observedShort, reversedLong, reversedShort, breakLong, breakShort
 
     def fliterVol(self, am, paraDict):
-        volPeriod = paraDict['volPeriod']
         lowVolThreshold = paraDict['lowVolThreshold']
 
-        std = ta.STDDEV(am.close, volPeriod)
-        atr = ta.ATR(am.high, am.low, am.close, volPeriod)
-        rangeHL = ta.MAX(am.high, volPeriod)-ta.MIN(am.low, volPeriod)
-        minVol = min(std[-1], atr[-1], rangeHL[-1])
-        lowFilterRange = am.close[-1]*lowVolThreshold
-        filterCanTrade = 1 if (minVol >= lowFilterRange) else -1
+        _, _, _, _, breakLong, breakShort = self.rBreak(am, paraDict)
+        hlPct = (breakLong - breakShort)/am.close
+        filterCanTrade = 1 if hlPct[-1]>lowVolThreshold else -1
         return filterCanTrade
+    
+    def bigVolWeight(self, am, paraDict):
+        bigVolPeriod = paraDict['bigVolPeriod']
+        bigVolThreshold = paraDict['bigVolThreshold']
+        bigMultiplier = paraDict['bigMultiplier']
 
+        rangeHL = ta.MAX(am.high, bigVolPeriod)-ta.MIN(am.low, bigVolPeriod)
+        bigVolRange = am.close[-1]*bigVolThreshold
+        bigVol = 1 if (rangeHL[-1] >= bigVolRange) else 0
+
+        lotMultiplier = 1
+        if bigVol:
+            lotMultiplier = bigMultiplier
+        return lotMultiplier
 
 
         
